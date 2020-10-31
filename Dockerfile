@@ -1,6 +1,6 @@
-FROM postgres:11-alpine
+FROM postgres:12-alpine
 
-ARG CLOUD_SDK_VERSION=315.0.0
+ARG CLOUD_SDK_VERSION=316.0.0
 ENV CLOUD_SDK_VERSION=$CLOUD_SDK_VERSION
 
 ENV PATH /google-cloud-sdk/bin:$PATH
