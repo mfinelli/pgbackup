@@ -1,6 +1,6 @@
 FROM postgres:12-alpine
 
-ARG CLOUD_SDK_VERSION=319.0.0
+ARG CLOUD_SDK_VERSION=323.0.0
 ENV CLOUD_SDK_VERSION=$CLOUD_SDK_VERSION
 
 ENV PATH /google-cloud-sdk/bin:$PATH
@@ -9,6 +9,7 @@ RUN apk --no-cache add \
         curl \
         python3 \
         py3-crcmod \
+        py3-openssl \
         bash \
         libc6-compat \
         openssh-client \
