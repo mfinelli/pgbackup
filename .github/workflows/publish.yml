@@ -1,9 +1,10 @@
 ---
-name: Mirror to GitHub
+name: Publish
 on:
   push:
     branches:
       - master
+  pull_request:
 
 jobs:
   main:
@@ -11,19 +12,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
+      - id: docker
+        uses: crazy-max/ghaction-docker-meta@v1
+        with:
+          images: mfinelli/pgbackup
       - uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHCR_PAT }}
-      - uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: ghcr.io/mfinelli/pgbackup:latest
-      - uses: peter-evans/dockerhub-description@v2
+        if: github.event_name != 'pull_request'
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: mfinelli/pgbackup
-          short-description: "postgres + google-cloud-sdk for running backups"
+      - uses: docker/login-action@v1
+        if: github.event_name != 'pull_request'
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR_TOKEN }}
+      - uses: docker/build-push-action@v2
+        with:
+          platforms: linux/amd64
+          push: true
+          tags: |
+            mfinelli/pgbackup:latest
+            ghcr.io/mfinelli/pgbackup:latest
+      # - uses: peter-evans/dockerhub-description@v2
+      #   with:
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
+      #     repository: mfinelli/pgbackup
+      #     short-description: "postgres + google-cloud-sdk for running backups"
