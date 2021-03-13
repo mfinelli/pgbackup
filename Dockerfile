@@ -1,5 +1,7 @@
 FROM postgres:12-alpine
 
+LABEL org.opencontainers.image.source https://github.com/mfinelli/pgbackup
+
 ARG CLOUD_SDK_VERSION=331.0.0
 ENV CLOUD_SDK_VERSION=$CLOUD_SDK_VERSION
 
