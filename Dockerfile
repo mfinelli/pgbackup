@@ -2,7 +2,7 @@ FROM postgres:12-alpine
 
 LABEL org.opencontainers.image.source https://github.com/mfinelli/pgbackup
 
-ARG CLOUD_SDK_VERSION=339.0.0
+ARG CLOUD_SDK_VERSION=343.0.0
 ENV CLOUD_SDK_VERSION=$CLOUD_SDK_VERSION
 
 ENV PATH /google-cloud-sdk/bin:$PATH
