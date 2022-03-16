@@ -31,7 +31,7 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
       - uses: docker/build-push-action@v2
         with:
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             mfinelli/pgbackup:latest
